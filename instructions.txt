@@ -11,3 +11,5 @@
 2. Create a file called ".env" and add the following line: "JWT_SECRET=my-super-secure-secret".
 
 3. Back in your terminal, run the following command to run the project in development mode: "npm run dev".
+
+4. Run the "npm run migrate" to migrate all data in database.
