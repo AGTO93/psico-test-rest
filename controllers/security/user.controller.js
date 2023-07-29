@@ -1,6 +1,12 @@
 const userService = require('../../services/security/user.service');
 
 exports.create = async (req, res) => {
+    /* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to create a user' */
+
+    /* #swagger.security = [{
+            "apiKeyAuth": []
+    }] */
     const { username, password } = req.body;
 
     try {
@@ -13,6 +19,12 @@ exports.create = async (req, res) => {
 };
 
 exports.findByUsername = async (req, res) => {
+    /* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to find a specific user' */
+
+    /* #swagger.security = [{
+            "apiKeyAuth": []
+    }] */
     const { username } = req.query;
 
     try {
@@ -25,9 +37,15 @@ exports.findByUsername = async (req, res) => {
 };
 
 exports.findAll = async (req, res) => {
+    /* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to list users' */
+
+    /* #swagger.security = [{
+        "apiKeyAuth": []
+    }] */
     try {
         const users = await userService.findAll();
-        res.json({ users});
+        res.json({ users });
     } catch (error) {
         console.error('Error al obtener usuarios:', error);
         res.status(500).json({ message: 'Error al obtener usuarios: ' + error });

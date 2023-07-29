@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const swaggerRoutes = require('./routes/swagger.routes');
 const sequelize = require('./config/database');
 
 
@@ -34,6 +35,9 @@ app.use('/auth', authRoutes);
 
 // Rango de URLs protegidas por el middleware de autenticación
 app.use('/api', userRoutes); // Todas las rutas bajo /api estarán protegidas
+
+
+app.use('/swagger', swaggerRoutes);
 
 
 const port = process.env.PORT || 3000;

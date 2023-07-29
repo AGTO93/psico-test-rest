@@ -4,7 +4,8 @@ exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // Llama al servicio de autenticación para verificar el usuario y generar el token
+        /* 	#swagger.tags = ['Security']
+        #swagger.description = 'Endpoint to sign in a specific user' */
         const token = await authService.authenticateUser(username, password);
         res.json({ token });
     } catch (error) {
@@ -12,3 +13,9 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 };
+
+exports.logout = async (req, res) => {
+    /* 	#swagger.tags = ['Security']
+        #swagger.description = 'Endpoint to sign out user' */
+    res.json({ message: 'Sesión cerrada exitosamente' });
+}
