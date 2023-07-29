@@ -1,0 +1,13 @@
+  ____      _             _____         _     ____           _   
+ |  _ \ ___(_) ___ ___   |_   _|__  ___| |_  |  _ \ ___  ___| |_ 
+ | |_) / __| |/ __/ _ \    | |/ _ \/ __| __| | |_) / _ \/ __| __|
+ |  __/\__ \ | (_| (_) |   | |  __/\__ \ |_  |  _ <  __/\__ \ |_ 
+ |_|   |___/_|\___\___/    |_|\___||___/\__| |_| \_\___||___/\__|
+                                                                 
+# Steps to execute the project
+
+1. Run the "npm i" command in your terminal to install all project resources.
+
+2. Create a file called ".env" and add the following line: "JWT_SECRET=my-super-secure-secret".
+
+3. Back in your terminal, run the following command to run the project in development mode: "npm run dev".
