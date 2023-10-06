@@ -1,25 +1,21 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
+const User = require('./user.model');
+const Role = require('./role.model');
 
-const User = sequelize.define('User', {
+const UserRole = sequelize.define('UserRole', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    password: {
-        type: DataTypes.STRING,
+    userId: {
+        type: DataTypes.UUID,
         allowNull: false,
     },
-    enabled: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
+    roleId: {
+        type: DataTypes.UUID,
+        allowNull: false,
     },
     createdAt: {
         type: DataTypes.DATE,
@@ -31,14 +27,14 @@ const User = sequelize.define('User', {
     },
 }, {
     schema: 'security',
-    tableName: 'users',
+    tableName: 'user_roles',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
+// Role.hasMany(UserRole, {
+//     foreignKey: 'roleId',
 //     sourceKey: 'id'
 // });
 
-module.exports = User;
+module.exports = UserRole;

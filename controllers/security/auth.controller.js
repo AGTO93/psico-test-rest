@@ -14,8 +14,23 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.logout = async (req, res) => {
+exports.validateActiveJWT = async (req, res) => {
     /* 	#swagger.tags = ['Security']
-        #swagger.description = 'Endpoint to sign out user' */
-    res.json({ message: 'Sesión cerrada exitosamente' });
-}
+        #swagger.description = 'Endpoint to validate active JSON Web Token' */
+    try {
+        console.log('headers', req.headers);
+        const tokenHeader = req.headers['authorization'];
+        const token = tokenHeader.replace('Bearer ', '');
+        console.log('token controller', token);
+        const activeToken = await authService.validateActiveJsonWebToken(token);
+        console.log('activeToken', activeToken);
+        if (activeToken) {
+            res.json({ message: 'El token está activo.' });
+        } else {
+            res.status(401).json({ message: 'El token no es válido o ha expirado.' });
+        }
+    } catch (error) {
+        console.error('Error al validar token:', error);
+        res.status(500).json({ message: 'Error al validar token' });
+    }
+};

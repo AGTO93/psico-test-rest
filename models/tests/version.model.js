@@ -1,20 +1,31 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
+const Category = require('./category.model');
+const Type = require('./type.model');
 
-const User = sequelize.define('User', {
+const Version = sequelize.define('Version', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
-    password: {
-        type: DataTypes.STRING,
+    description: {
+        type: DataTypes.TEXT
+    },
+    expirationDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    typeId: {
+        type: DataTypes.UUID,
+        allowNull: false
+    },
+    estimatedDuration: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     enabled: {
@@ -30,15 +41,15 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'security',
-    tableName: 'users',
+    schema: 'tests',
+    tableName: 'versions',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
-//     sourceKey: 'id'
-// });
+Version.hasMany(Category);
+Category.belongsTo(Version);
+Type.hasMany(Version);
+Version.belongsTo(Type);
 
-module.exports = User;
+module.exports = Version;

@@ -15,6 +15,22 @@ exports.createNewUser = async (username, password) => {
     return newUser;
 };
 
+exports.updatePassword = async (username, oldPassword, newPassword) => {
+    const user = await User.findOne({ where: { username } });
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+
+    if (isPasswordValid) {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        return user;
+    } else {
+        throw new Error('Credenciales inválidas');
+    }
+};
+
 exports.findByUsername = async (username) => {
     console.log('username', username);
     const user = await User.findOne({

@@ -1,21 +1,22 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
 
-const User = sequelize.define('User', {
+const Category = sequelize.define('Category', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    description: {
+        type: DataTypes.TEXT
+    },
+    versionId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -30,15 +31,10 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'security',
-    tableName: 'users',
+    schema: 'tests',
+    tableName: 'categories',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
-//     sourceKey: 'id'
-// });
-
-module.exports = User;
+module.exports = Category;

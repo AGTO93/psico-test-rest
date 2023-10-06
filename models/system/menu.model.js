@@ -1,21 +1,23 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
+const Role = require('../security/role.model')
 
-const User = sequelize.define('User', {
+const Menu = sequelize.define('Menu', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    url: {
+        type: DataTypes.STRING
+    },
+    roleId: {
+        type: DataTypes.UUID,
+        allowNull: false
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -30,15 +32,13 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'security',
-    tableName: 'users',
+    schema: 'system',
+    tableName: 'menues',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
-//     sourceKey: 'id'
-// });
+Role.hasMany(Menu);
+Menu.belongsTo(Role);
 
-module.exports = User;
+module.exports = Menu;

@@ -2,10 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth.routes');
-const userRoutes = require('./routes/user.routes');
-const swaggerRoutes = require('./routes/swagger.routes');
 const sequelize = require('./config/database');
+const syncModels = require('./config/syncModels');
+
+// routes
+const authRoutes = require('./routes/security/auth.routes');
+const userRoutes = require('./routes/security/user.routes');
+const countryRoutes = require('./routes/business/country.routes');
+const cityRoutes = require('./routes/business/city.routes');
+const employeeRoutes = require('./routes/business/employee.routes');
+const patientRoutes = require('./routes/business/patient.routes');
+const genderRoutes = require('./routes/business/gender.routes');
+const documentTypeRoutes = require('./routes/business/document-type.routes');
+const employeePatientRoutes = require('./routes/business/employee-patient.routes');
+
+const swaggerRoutes = require('./routes/swagger.routes');
 
 
 dotenv.config();
@@ -34,7 +45,15 @@ app.get('/testdb', async (req, res) => {
 app.use('/auth', authRoutes);
 
 // Rango de URLs protegidas por el middleware de autenticación
-app.use('/api', userRoutes); // Todas las rutas bajo /api estarán protegidas
+// Todas las rutas bajo /api estarán protegidas
+app.use('/api', userRoutes);
+app.use('/api', countryRoutes);
+app.use('/api', cityRoutes);
+app.use('/api', genderRoutes);
+app.use('/api', employeeRoutes);
+app.use('/api', patientRoutes);
+app.use('/api', documentTypeRoutes);
+app.use('/api', employeePatientRoutes);
 
 
 app.use('/swagger', swaggerRoutes);
@@ -46,7 +65,8 @@ app.listen(port, async () => {
 
     // Sincroniza todos los modelos con la base de datos
     try {
-        await sequelize.sync();
+        await sequelize.sync({ alter: false });
+        syncModels();
         console.log('Modelos sincronizados con la base de datos.');
     } catch (error) {
         console.error('Error al sincronizar modelos con la base de datos:', error);

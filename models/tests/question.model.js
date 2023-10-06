@@ -1,21 +1,24 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
+const Subcategory = require('./subcategory.model');
 
-const User = sequelize.define('User', {
+const Question = sequelize.define('Question', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+    description: {
+        type: DataTypes.TEXT
     },
-    password: {
-        type: DataTypes.STRING,
+    order: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
         allowNull: false,
+    },
+    subcategoryId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -30,15 +33,13 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'security',
-    tableName: 'users',
+    schema: 'tests',
+    tableName: 'questions',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
-//     sourceKey: 'id'
-// });
+Subcategory.hasMany(Question);
+Question.belongsTo(Subcategory);
 
-module.exports = User;
+module.exports = Question;

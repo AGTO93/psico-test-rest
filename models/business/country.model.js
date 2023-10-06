@@ -1,21 +1,18 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
 
-const User = sequelize.define('User', {
+const Country = sequelize.define('Country', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
-    password: {
+    code: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -30,15 +27,10 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'security',
-    tableName: 'users',
+    schema: 'business',
+    tableName: 'countries',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
-//     sourceKey: 'id'
-// });
-
-module.exports = User;
+module.exports = Country;

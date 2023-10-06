@@ -18,3 +18,14 @@ exports.authenticateUser = async (username, password) => {
 
     return token;
 };
+
+exports.validateActiveJsonWebToken = async (token) => {
+    try {
+        console.log('token', token);
+        const verify = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('verify token', verify);
+        return true;
+    } catch (error) {
+        return false;
+    }
+};

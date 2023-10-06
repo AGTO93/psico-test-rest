@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "migrate": "sequelize db:migrate",
-    "swagger-autogen": "node ./config/swagger.js"
+    "swagger": "node ./config/swagger.js"
   },
   "keywords": [],
   "author": "Augusto Nicolás Servín Pappalardo",

@@ -1,21 +1,30 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const UserRole = require('./user-roles.model');
+const Question = require('./question.model');
 
-const User = sequelize.define('User', {
+const Option = sequelize.define('Option', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    username: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    description: {
+        type: DataTypes.TEXT
+    },
+    value: {
+        type: DataTypes.INTEGER
+    },
+    order: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+    },
+    questionId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -30,15 +39,13 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'security',
-    tableName: 'users',
+    schema: 'tests',
+    tableName: 'options',
     timestamps: true,
     underscored: true,
 });
 
-// User.hasMany(UserRole, {
-//     foreignKey: 'userId',
-//     sourceKey: 'id'
-// });
+Question.hasMany(Option);
+Option.belongsTo(Question);
 
-module.exports = User;
+module.exports = Option;
