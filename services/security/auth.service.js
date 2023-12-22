@@ -13,7 +13,7 @@ exports.authenticateUser = async (username, password) => {
     }
 
     const token = jwt.sign({ username }, process.env.JWT_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '3h',
     });
 
     return token;
@@ -21,10 +21,11 @@ exports.authenticateUser = async (username, password) => {
 
 exports.validateActiveJsonWebToken = async (token) => {
     try {
-        console.log('token', token);
         const verify = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('verify token', verify);
-        return true;
+        const active = (verify) ? true : false;
+        return {
+            'active': active,
+        };
     } catch (error) {
         return false;
     }

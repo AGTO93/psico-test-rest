@@ -17,16 +17,16 @@ const Patient = sequelize.define('Patient', {
     },
     lastname: {
         type: DataTypes.STRING,
-        allowNull: false, 
+        allowNull: false,
     },
     dateOfBirth: {
         type: DataTypes.DATE
     },
-    gender: {
+    genderId: {
         type: DataTypes.UUID,
         allowNull: false,
     },
-    documentType: {
+    documentTypeId: {
         type: DataTypes.UUID,
         allowNull: false,
     },

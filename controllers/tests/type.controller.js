@@ -1,64 +1,64 @@
-const CityService = require('../../services/business/City.service');
+const TypeService = require('../../services/tests/type.service');
 
 exports.create = async (req, res) => {
-    /* 	#swagger.tags = ['City']
-        #swagger.description = 'Endpoint to create new city' */
+    /* 	#swagger.tags = ['Type']
+        #swagger.description = 'Endpoint to create new type' */
 
     /* #swagger.security = [{
             "apiKeyAuth": []
     }] */
     try {
-        const cityData = req.body;
-        const newCity = await CityService.createCity(cityData);
-        res.json(newCity);
+        const TypeData = req.body;
+        const newType = await TypeService.createType(TypeData);
+        res.json(newType);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
 exports.update = async (req, res) => {
-    /* 	#swagger.tags = ['City']
-        #swagger.description = 'Endpoint to update city' */
+    /* 	#swagger.tags = ['Type']
+        #swagger.description = 'Endpoint to update type' */
 
     /* #swagger.security = [{
             "apiKeyAuth": []
     }] */
     try {
         const { id } = req.params;
-        const cityData = req.body;
-        const updatedCity = await CityService.updateCity(id, cityData);
-        res.json(updatedCity);
+        const typeData = req.body;
+        const updatedType = await TypeService.updateType(id, typeData);
+        res.json(updatedType);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
 exports.findAll = async (req, res) => {
-    /* 	#swagger.tags = ['City']
-        #swagger.description = 'Endpoint to list cities' */
+    /* 	#swagger.tags = ['Type']
+        #swagger.description = 'Endpoint to list types' */
 
     /* #swagger.security = [{
             "apiKeyAuth": []
     }] */
     try {
-        const city = await CityService.findAllCities();
-        res.json(city);
+        const type = await TypeService.findAllTypes();
+        res.json(type);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
 exports.findById = async (req, res) => {
-    /* 	#swagger.tags = ['City']
-        #swagger.description = 'Endpoint to find a specific city' */
+    /* 	#swagger.tags = ['Type']
+        #swagger.description = 'Endpoint to find a specific type' */
 
     /* #swagger.security = [{
             "apiKeyAuth": []
     }] */
     try {
         const { id } = req.params;
-        const city = await CityService.findCityById(id);
-        res.json(city);
+        const type = await TypeService.findTypeById(id);
+        res.json(type);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

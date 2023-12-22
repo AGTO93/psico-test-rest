@@ -7,10 +7,10 @@ exports.create = async (req, res) => {
     /* #swagger.security = [{
             "apiKeyAuth": []
     }] */
-    const { username, password } = req.body;
+    const userData = req.body;
 
     try {
-        const newUser = await userService.createNewUser(username, password);
+        const newUser = await userService.createNewUser(userData);
         res.json({ newUser });
     } catch (error) {
         console.error('Error al crear usuario:', error);
@@ -69,3 +69,40 @@ exports.findAll = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener usuarios: ' + error });
     }
 }
+
+exports.edit = async (req, res) => {
+    /* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to edit specific user' */
+
+    /* #swagger.security = [{
+            "apiKeyAuth": []
+    }] */
+    const userData = req.body;
+
+    try {
+        const newUser = await userService.updateUser(userData.id, userData);
+        res.json({ newUser });
+    } catch (error) {
+        console.error('Error al actualizar usuario:', error);
+        res.status(500).json({ message: 'Error al crear usuario: ' + error });
+    }
+};
+
+exports.delete = async (req, res) => {
+    /* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to delete specific user' */
+
+    /* #swagger.security = [{
+            "apiKeyAuth": []
+    }] */
+
+    try {
+        const { id } = req.params;
+        console.log('id', id);
+        const user = await userService.deleteUser(id);
+        res.json({ user });
+    } catch (error) {
+        console.error('Error al buscar usuario:', error);
+        res.status(500).json({ message: 'Error al buscar usuario: ' + error });
+    }
+};

@@ -15,8 +15,9 @@ exports.updateEmployee = async (id, data) => {
             throw new Error('Employee not found');
         }
 
-        await employee.update(data);
-        return employee;
+        const updatedEmployee = await Employee.update(data, { where: { id: employee.id } });
+
+        return updatedEmployee;
     } catch (error) {
         throw error;
     }
@@ -41,4 +42,17 @@ exports.findEmployeeById = async (id) => {
         throw error;
     }
 }
+
+exports.deleteEmployee = async (id) => {
+    try {
+        const employee = await Employee.destroy({ where: { id: id } });
+        if (!employee) {
+            throw new Error('Employee not found');
+        }
+
+        return employee;
+    } catch (error) {
+        throw error;
+    }
+};
 

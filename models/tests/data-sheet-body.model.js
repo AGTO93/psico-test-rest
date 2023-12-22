@@ -1,23 +1,25 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const Role = require('../security/role.model')
+const DataSheetHeader = require('./data-sheet-header.model');
 
-const Menu = sequelize.define('Menu', {
+const dataSheetBody = sequelize.define('dataSheetBody', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    name: {
+    dataSheetHeaderId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+    },
+    description: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    url: {
-        type: DataTypes.STRING
-    },
-    roleId: {
-        type: DataTypes.UUID,
-        allowNull: false
+    type: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1, // 1. motivo consulta; 2. descripción del consultante; 3. observaciones
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -32,13 +34,12 @@ const Menu = sequelize.define('Menu', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'system',
-    tableName: 'menues',
+    schema: 'tests',
+    tableName: 'data_sheet_body',
     timestamps: true,
     underscored: true,
 });
 
-Role.hasMany(Menu);
-Menu.belongsTo(Role);
+DataSheetHeader.hasMany(dataSheetBody);
 
-module.exports = Menu;
+module.exports = dataSheetBody;

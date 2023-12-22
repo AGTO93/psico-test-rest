@@ -8,5 +8,7 @@ router.post('/employee', authenticateToken, employeeController.create);
 router.put('/employee/:id', authenticateToken, employeeController.update);
 router.get('/employee', authenticateToken, employeeController.findAll);
 router.get('/employee/by-id/:id', authenticateToken, employeeController.findById);
+router.put('/employee', authenticateToken, employeeController.update);
+router.delete('/employee/:id', authenticateToken, employeeController.delete);
 
 module.exports = router;

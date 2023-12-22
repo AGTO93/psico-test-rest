@@ -4,6 +4,7 @@
   "description": "Servicio API REST de Pruebas Psicológicas",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app.js",
     "migrate": "sequelize db:migrate",
     "swagger": "node ./config/swagger.js"

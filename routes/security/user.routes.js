@@ -10,5 +10,7 @@ router.post('/user', authenticateToken, userController.create);
 router.get('/user', authenticateToken, userController.findAll);
 router.get('/user/by-username/:username', authenticateToken, userController.findByUsername);
 router.post('/user/update-password', authenticateToken, userController.updatePassword);
+router.put('/user', authenticateToken, userController.edit);
+router.delete('/user/:id', authenticateToken, userController.delete);
 
 module.exports = router;

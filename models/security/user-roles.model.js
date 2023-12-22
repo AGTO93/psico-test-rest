@@ -32,9 +32,4 @@ const UserRole = sequelize.define('UserRole', {
     underscored: true,
 });
 
-// Role.hasMany(UserRole, {
-//     foreignKey: 'roleId',
-//     sourceKey: 'id'
-// });
-
 module.exports = UserRole;

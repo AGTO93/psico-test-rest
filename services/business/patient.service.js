@@ -1,8 +1,19 @@
+const EmployeePatient = require('../../models/business/employee-patient.model');
 const Patient = require('../../models/business/patient.model');
 
 exports.createPatient = async (data) => {
     try {
-        return await Patient.create(data);
+        const patient = await Patient.create(data);
+
+        try {
+            await EmployeePatient.create({
+                employeeId: data.employeeId,
+                patientId: patient.id
+            })
+        } catch (error) {
+            throw error;
+        }
+        return patient
     } catch (error) {
         throw error;
     }
@@ -15,7 +26,14 @@ exports.updatePatient = async (id, data) => {
             throw new Error('Patient not found');
         }
 
-        await patient.update(data);
+        await Patient.update(data, { where: { id: patient.id } });
+
+        try {
+            await EmployeePatient.update({ employeeId: data.employeeId }, { where: { patientId: patient.id } });
+        } catch (error) {
+            throw error;
+        }
+
         return patient;
     } catch (error) {
         throw error;
@@ -23,7 +41,7 @@ exports.updatePatient = async (id, data) => {
 };
 
 exports.findAllPatients = async () => {
-    try { 
+    try {
         return await Patient.findAll();
     } catch (error) {
         throw error;
@@ -32,13 +50,38 @@ exports.findAllPatients = async () => {
 
 exports.findPatientById = async (id) => {
     try {
-        const country = await Patient.findByPk(id);
-        if (!country) {
+        const patient = await Patient.findByPk(id);
+        if (!patient) {
             throw new Error('Patient not found');
         }
-        return country;
+        return patient;
     } catch (error) {
         throw error;
     }
 }
+
+exports.findAllPatientByEmployeeId = async (id) => {
+    try {
+        const patient = await Patient.findAll({ where: { employeeId: id } });
+        if (!patient) {
+            throw new Error('Patient not found');
+        }
+        return patient;
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.deletePatient = async (id) => {
+    try {
+        const patient = await Patient.destroy({ where: { id: id } });
+        if (!patient) {
+            throw new Error('Patient not found');
+        }
+
+        return patient;
+    } catch (error) {
+        throw error;
+    }
+};
 

@@ -1,23 +1,23 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const Menu = require('./menu.model');
 
-const Submenu = sequelize.define('Submenu', {
+const DataSheetHeader = sequelize.define('DataSheetHeader', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    url: {
-        type: DataTypes.STRING
-    },
-    menuId: {
+    patientId: {
         type: DataTypes.UUID,
-        allowNull: false
+        defaultValue: DataTypes.UUIDV4,
+    },
+    employeeId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+    },
+    informant: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     enabled: {
         type: DataTypes.BOOLEAN,
@@ -32,13 +32,10 @@ const Submenu = sequelize.define('Submenu', {
         defaultValue: DataTypes.NOW,
     },
 }, {
-    schema: 'system',
-    tableName: 'submenues',
+    schema: 'tests',
+    tableName: 'data_sheet_header',
     timestamps: true,
     underscored: true,
 });
 
-Menu.hasMany(Submenu);
-Submenu.belongsTo(Menu);
-
-module.exports = Submenu;
+module.exports = DataSheetHeader;

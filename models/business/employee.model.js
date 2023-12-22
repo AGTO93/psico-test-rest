@@ -24,11 +24,11 @@ const Employee = sequelize.define('Employee', {
     dateOfBirth: {
         type: DataTypes.DATE
     },
-    gender: {
+    genderId: {
         type: DataTypes.UUID,
         allowNull: false,
     },
-    documentType: {
+    documentTypeId: {
         type: DataTypes.UUID,
         allowNull: false,
     },
